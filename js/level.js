@@ -303,19 +303,19 @@
     }
 
     /**
-     * Updates camera tracking following the player smoothly.
-     * Enforces classic Mario left-lock rule (camera never scrolls left).
+     * Updates camera tracking following the player smoothly in both directions (left and right).
      */
     updateCamera(playerX, viewportWidth) {
-      const targetX = playerX - viewportWidth * 0.35;
-      if (targetX > this.cameraX) {
-        this.cameraX = targetX;
-      }
+      // Keep player centered / at 40% of the screen
+      const targetX = playerX - viewportWidth * 0.40;
+      this.cameraX = targetX;
+
       // Clamp at right level boundary
       const maxCameraX = this.worldPixelWidth - viewportWidth;
       if (this.cameraX > maxCameraX) {
         this.cameraX = maxCameraX;
       }
+      // Clamp at left level boundary
       if (this.cameraX < 0) {
         this.cameraX = 0;
       }

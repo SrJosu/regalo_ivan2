@@ -91,6 +91,9 @@
     if (e && e.preventDefault) {
       e.preventDefault();
     }
+    if (global.GameAudio && global.GameAudio.unlockAudio) {
+      global.GameAudio.unlockAudio();
+    }
     const touches = (e && e.changedTouches) ? Array.from(e.changedTouches) : [{ identifier: 0 }];
     for (const touch of touches) {
       touchMap.set(touch.identifier, action);
