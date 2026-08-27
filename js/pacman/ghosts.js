@@ -346,7 +346,7 @@ class Ghost {
       ctx.shadowBlur = 12;
     } else {
       ctx.shadowColor = bodyColor;
-      ctx.shadowBlur = 8;
+      ctx.shadowBlur = (window.pacmanLowPerf ? 2 : 8);
     }
 
     ctx.fillStyle = bodyColor;

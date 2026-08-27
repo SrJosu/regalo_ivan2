@@ -59,6 +59,15 @@ class Game {
     this.level = 1;
     this.lives = 3;
     this.state = GAME_STATES.READY;
+    // Auto‑detect Android and enable low‑performance mode
+    const isAndroid = /Android/.test(navigator.userAgent);
+    window.pacmanLowPerf = isAndroid;
+    document.body.classList.toggle('low-perf', window.pacmanLowPerf);
+    // Global toggle function for UI
+    window.setPacmanPerfMode = function(highPerf) {
+      window.pacmanLowPerf = !highPerf;
+      document.body.classList.toggle('low-perf', window.pacmanLowPerf);
+    };
 
     this.stats = {
       ghostsEaten: 0,
@@ -152,6 +161,7 @@ class Game {
       globalStatMaxlevel: document.getElementById('global-stat-maxlevel'),
       settingsModal: document.getElementById('settings-modal'),
       settingsToggleBtn: document.getElementById('settings-toggle-btn'),
+      lowPerfToggle: document.getElementById('low-perf-toggle'),
       closeSettingsBtn: document.getElementById('close-settings-btn'),
       volumeSlider: document.getElementById('volume-slider'),
       themeSelect: document.getElementById('theme-select'),
@@ -223,6 +233,14 @@ class Game {
         this.dom.pauseModal.classList.remove('hidden');
       }
     });
+
+    // Low‑performance toggle handling
+    if (this.dom.lowPerfToggle) {
+      this.dom.lowPerfToggle.checked = window.pacmanLowPerf;
+      this.dom.lowPerfToggle.addEventListener('change', e => {
+        window.setPacmanPerfMode(e.target.checked);
+      });
+    }
 
     this.dom.btnPauseQuick.addEventListener('click', () => this.togglePause());
 
